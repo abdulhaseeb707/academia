@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inflation &amp; Corporate Profitability: Econometric Analysis — Abdul Haseeb Khan</title>
+  <meta name="description" content="An empirical econometric study examining the relationship between macroeconomic inflation and firm-level profitability, built in Stata and Python by Abdul Haseeb Khan.">
+  <meta name="author" content="Abdul Haseeb Khan">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .project-detail-content {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .detail-hero-box {
+      padding: 36px 0 28px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.84rem;
+      color: var(--accent-blue);
+      margin-bottom: 20px;
+      font-weight: 600;
+      transition: transform var(--transition-fast);
+    }
+    .back-btn:hover {
+      transform: translateX(-4px);
+      color: var(--accent-blue-hover);
+    }
+    .eyebrow-tag {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      letter-spacing: 0.06em;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .spec-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin: 28px 0;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+    }
+    .spec-item dt {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      letter-spacing: 0.06em;
+      margin-bottom: 4px;
+      font-weight: 700;
+    }
+    .spec-item dd {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .prose-section {
+      margin-bottom: 32px;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 24px 28px;
+    }
+    .prose-section h2 {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      color: var(--text-primary);
+      margin-bottom: 14px;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 8px;
+    }
+    .prose-section p {
+      font-size: 1.02rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+    .prose-section ul {
+      list-style: none;
+      margin: 16px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .prose-section ul li {
+      font-size: 0.96rem;
+      color: var(--text-secondary);
+      position: relative;
+      padding-left: 22px;
+      line-height: 1.65;
+    }
+    .prose-section ul li::before {
+      content: "▹";
+      position: absolute;
+      left: 0;
+      color: var(--accent-gold);
+    }
+    .code-callout {
+      background: var(--bg-surface-raised);
+      border-left: 4px solid var(--accent-gold);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: 16px 20px;
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      color: var(--text-primary);
+      margin: 20px 0;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <div class="nav-brand-wrap">
+        <a class="nav-brand" href="index.html#about">
+          Abdul Haseeb <span>Khan</span>
+        </a>
+        <span class="brand-badge">MPhil Scholar</span>
+      </div>
+
+      <div class="nav-actions">
+        <button class="theme-toggle-btn" id="themeToggle" aria-label="Toggle Theme">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+        <a href="index.html#projects" class="btn-chip">
+          ← Back to Portfolio
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Detail Hero Box -->
+  <div class="detail-hero-box">
+    <div class="container project-detail-content">
+      <a href="index.html#projects" class="back-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        Back to All Research &amp; Projects
+      </a>
+      
+      <div class="eyebrow-tag">Macroeconomic Econometrics &amp; Financial Analysis</div>
+      <h1 class="profile-name-title" style="font-size:clamp(1.9rem, 3.8vw, 2.7rem);">
+        Inflation and Corporate Profitability: An Econometric Analysis
+      </h1>
+      <p style="font-size:1.05rem; color:var(--text-secondary); margin-top:8px;">
+        An empirical investigation into macro-financial transmission mechanisms across firm-level operating performance.
+      </p>
+
+      <div class="spec-grid">
+        <div class="spec-item">
+          <dt>Analytical Software</dt>
+          <dd>Stata · Python (Statsmodels)</dd>
+        </div>
+        <div class="spec-item">
+          <dt>Methodology</dt>
+          <dd>Panel Econometrics (FE/RE)</dd>
+        </div>
+        <div class="spec-item">
+          <dt>Data Architecture</dt>
+          <dd>PSX &amp; SBP Conventions</dd>
+        </div>
+        <div class="spec-item">
+          <dt>GitHub Status</dt>
+          <dd><a href="https://github.com/abdulhaseeb707" target="_blank" rel="noopener" style="color:var(--accent-gold);">@abdulhaseeb707 ↗</a></dd>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Detail Body -->
+  <main class="container" style="padding-top:40px;">
+    <div class="project-detail-content">
+      
+      <div class="prose-section">
+        <h2>1. Executive Summary &amp; Research Motivation</h2>
+        <p>
+          While macroeconomic theory frequently asserts that inflation exerts uniform cost-push pressures on corporate margins, real-world corporate financial statements demonstrate significant heterogeneity. This project treats the inflation-profitability nexus as an empirical question, investigating how firm size, capital structure, and sector-specific pricing power mediate inflationary impacts on corporate return metrics (ROA, ROE, EBITDA margins).
+        </p>
+      </div>
+
+      <div class="prose-section">
+        <h2>2. Econometric Formulation &amp; Hypothesis</h2>
+        <p>
+          The baseline empirical model evaluates corporate profitability as a function of macroeconomic indicators and firm-level control variables:
+        </p>
+        <div class="code-callout">
+          Profitability_{i,t} = β₀ + β₁·Inflation_{t} + β₂·PolicyRate_{t} + β₃·FirmSize_{i,t} + β₄·Leverage_{i,t} + μ_{i} + ε_{i,t}
+        </div>
+        <ul>
+          <li><strong>Primary Hypothesis:</strong> High inflationary episodes exert a statistically significant contractionary effect on operating margins for high-leverage and non-consumer staple firms.</li>
+          <li><strong>Secondary Hypothesis:</strong> Capital-intensive corporations with high asset tangibility possess asymmetric transmission lags compared to services and financial intermediaries.</li>
+        </ul>
+      </div>
+
+      <div class="prose-section">
+        <h2>3. Data Architecture &amp; Empirical Pipeline</h2>
+        <p>
+          The empirical workflow is developed in dual environments—<strong>Stata</strong> for standard econometrics diagnostics and <strong>Python</strong> for automated data cleaning, pipeline scripting, and visualization:
+        </p>
+        <ul>
+          <li><strong>Data Cleaning &amp; Harmonization:</strong> Normalization of balance sheet items, handling missing observations, and adjusting nominal figures.</li>
+          <li><strong>Panel Specification Testing:</strong> Running Hausman specification tests to determine appropriateness between Fixed Effects (Within Estimator) and Random Effects (GLS).</li>
+          <li><strong>Diagnostic Suite:</strong> Testing for heteroskedasticity (Breusch-Pagan/Cook-Weisberg), autocorrelation (Wooldridge test for AR(1)), and multicollinearity (Variance Inflation Factors - VIF).</li>
+          <li><strong>Robust Standard Errors:</strong> Applying Huber-White cluster-robust standard errors to correct for cross-sectional dependence.</li>
+        </ul>
+      </div>
+
+      <div class="prose-section">
+        <h2>4. Key Insights &amp; Findings</h2>
+        <p>
+          The findings highlight that inflation's impact on corporate profitability is heavily dependent on a firm's pricing power and debt structure. Highly leveraged firms experience compounded profitability decline as monetary tightening often accompanies inflation, raising financial expenses while input costs increase.
+        </p>
+      </div>
+
+      <div class="prose-section">
+        <h2>5. Scripts &amp; Code Replication</h2>
+        <p>
+          All analytical scripts (Stata <code>.do</code> files and Python Jupyter notebooks) and data dictionary documents are maintained under structured version control.
+        </p>
+        <div style="margin-top:20px;">
+          <a href="https://github.com/abdulhaseeb707" target="_blank" rel="noopener" class="btn-chip btn-primary">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            Explore Code on GitHub (@abdulhaseeb707)
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        © <span id="year"></span> <strong>Abdul Haseeb Khan</strong> · Business Economics &amp; MPhil Economics Scholar
+      </div>
+      <div class="footer-nav">
+        <a href="index.html#projects">All Projects</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="#" style="color:var(--accent-gold);">Top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
